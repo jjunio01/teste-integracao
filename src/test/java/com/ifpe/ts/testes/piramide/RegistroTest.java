@@ -1,13 +1,12 @@
 package com.ifpe.ts.testes.piramide;
 
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +33,7 @@ public class RegistroTest {
 		
         Professor prof = new Professor("Humberto", "81999074393", "1408701");
         RepositorioProfessor repProf = new RepositorioProfessor();
-        int i = repProf.inserir(prof);
+        repProf.inserir(prof);
         assertFalse(throwException());
         
         
@@ -42,4 +41,18 @@ public class RegistroTest {
 	private boolean throwException() throws SQLException{
         throw new SQLException();
     }
+	
+	@Test
+	public void removerTest() throws TelefoneInvalidoException, SiapeInvalidoException {
+		Professor prof = new Professor("Humberto", "81999074393", "1408722");
+        RepositorioProfessor repProf = new RepositorioProfessor();
+        repProf.inserir(prof);
+        int i = repProf.remover("1408722");
+        assertEquals(1, i);
+	}
+	
+	@After
+	public void fechar() throws Exception {
+		db.fecharConexao();
+	}
 }
